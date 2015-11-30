@@ -1,0 +1,58 @@
+.dib-dialog-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+.dib-dialog {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 400px;
+    padding: 15px 25px;
+    height: 200px;
+    background: white;
+    font-family: "Microsoft Yahei", sans-serif;
+    box-sizing: border-box;
+    box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    border-radius: 3px;
+    color: #4c4c4c;
+}
+@-webkit-keyframes fade-in {
+  from {
+    opacity: 0.3;
+    -webkit-transform: translate3d(0, -50%, 0) scale(0.5);
+    transform: translate3d(0, -50%, 0) scale(0.5);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0.3;
+    -webkit-transform: translate3d(0, -50%, 0) scale(0.5);
+    transform: translate3d(0, -50%, 0) scale(0.5);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fade-in {
+    animation: fade-in 0.3s;
+    -webkit-animation: fade-in 0.3s;
+    animation-delay: 0s;
+    -webkit-animation-delay: 0s;
+}
