@@ -13,21 +13,27 @@
         } else {
             this._$el = opts.el;
         }
-        this._$el.wrap('</div class="'+this._pfx+'-dialog-mask"/>');
         return this.refresh.call(this);
     };
     Dialog.prototype.refresh = function() {
+        if (this._$el) this._$el.remove();
         if (this.title) {
             var $title = $('<div/>');
             $title.addClass(this._pfx+'-dialog-title').text(this.title);
             this._$el.append($title);
         }
-        var $mask = $('<div class="'+this._pfx+'-dialog-mask"/>');
-        $mask.fadeIn(300);
-        this._$el.appendTo($mask);
-        $mask.appendTo($('body'));
+        if (!this._$mask) {
+            this._$mask = $('<div class="'+this._pfx+'-dialog-mask"/>');
+            this._$mask.appendTo($('body'));
+        }
+        this._$mask.fadeIn(300);
+        this._$el.appendTo(this._$mask);
         moveToCenter(this._$el);
         return this;
+    };
+    Dialog.prototype.setTitle = function(newTitle) {
+        this.title = newTitle;
+        return this.refresh.call(this);
     };
     Dialog.prototype.open = function() {
         if (this.isOpened) return this;
@@ -40,6 +46,7 @@
         if (!this.isOpened) return this;
         this.isOpened = false;
         this._$el.removeClass('fade-in');
+        this._$el.hide();
         return this;
     };
     
