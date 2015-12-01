@@ -4,6 +4,7 @@
     left: 0;
     right: 0;
     bottom: 0;
+    /* background: rgba(255,255,255,0.1); */
     background: rgba(0,0,0,0.2);
     z-index: 1000;
 }
@@ -13,20 +14,97 @@
     top: 0;
     left: 0;
     min-width: 400px;
-    padding: 15px 25px;
-    height: 200px;
-    background: white;
+    /* min-height: 200px; */
+    max-width: 400px;
     font-family: "Microsoft Yahei", sans-serif;
     box-sizing: border-box;
-    box-shadow: 0 0 30px rgba(0,0,0,0.3);
-    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border: 1px solid #bbb;
+    border-radius: 5px;
     color: #4c4c4c;
+    background: white;
+    font-size: 13px;
+    transition: all 0.6s; 
 }
+.dib-dialog-title {
+    padding: 0.8em 1.5em;
+    border-bottom: 0px solid #eee;
+    background: #fff;
+    font-size: 1.2em;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px; 
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
+}
+.dib-dialog-content {
+    padding: 0.8em 1.5em;
+    padding-bottom: 1.6em;
+    color: #777;
+    transition: all 0.2s;
+}
+.dib-dialog-btns-wrapper {
+    width: 100%;
+    border-top: 1px solid #ddd;
+}
+.dib-dialog-btns {
+    text-align: right;
+    background: #eee;
+    padding: 0.8em;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.dib-dialog-btn {
+    display: inline-block;
+    margin: 0.5em;
+    padding: 0.3em 0.6em;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: all 0.2s; 
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
+}
+.dib-dialog-btn:hover {
+    border: 1px solid #FF8C00;
+}
+.dib-dialog-btn-disabled {
+    border: 1px solid #ccc;
+    color: #aaa;
+    background: #ddd;
+}
+.dib-dialog-btn-disabled:hover {
+    border: 1px solid #ccc;
+    color: #aaa;
+    background: #ddd;
+}
+.dib-dialog-btn-important {
+    border: 1px solid #FF8C00;
+    color: white;
+    background: #ffa947;
+}
+.dib-dialog input {outline: none;}
 @-webkit-keyframes fade-in {
   from {
     opacity: 0.3;
-    -webkit-transform: translate3d(0, -50%, 0) scale(0.5);
-    transform: translate3d(0, -50%, 0) scale(0.5);
+    -webkit-transform: translate3d(0, -20%, 0) scale(0.5);
+    transform: translate3d(0, -20%, 0) scale(0.5);
   }
 
   to {
@@ -39,8 +117,8 @@
 @keyframes fade-in {
   from {
     opacity: 0.3;
-    -webkit-transform: translate3d(0, -50%, 0) scale(0.5);
-    transform: translate3d(0, -50%, 0) scale(0.5);
+    -webkit-transform: translate3d(0, -20%, 0) scale(0.5);
+    transform: translate3d(0, -20%, 0) scale(0.5);
   }
 
   to {

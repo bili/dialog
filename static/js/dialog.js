@@ -6,47 +6,90 @@
     };
     Dialog.prototype.init = function(opts) {
         this.isOpened = false;
-        if (!opts || !opts.el) {
-            this.title = this.title || false;
-            this._$el = $('<div/>');
-            this._$el.attr('id', this._id).addClass(this._pfx+'-dialog');
-        } else {
-            this._$el = opts.el;
-        }
-        return this.refresh.call(this);
+        if (!opts || !opts.el) this.makeUniqueDlg.call(this, opts);
+        else this._$dlg = opts.el;
+        return this;
     };
-    Dialog.prototype.refresh = function() {
-        if (this._$el) this._$el.remove();
+    Dialog.prototype.makeUniqueDlg = function(opts) {
+        this.title = opts.title || this.title || false;
+        this._$dlg = $('<div/>');
+        this._$dlg.attr('id', this._id).addClass(this._pfx+'-dialog');
         if (this.title) {
             var $title = $('<div/>');
             $title.addClass(this._pfx+'-dialog-title').text(this.title);
-            this._$el.append($title);
+            this._$dlg.prepend($title);
         }
-        if (!this._$mask) {
+        if (opts.mask) {
             this._$mask = $('<div class="'+this._pfx+'-dialog-mask"/>');
+            this._$dlg.appendTo(this._$mask);
             this._$mask.appendTo($('body'));
+        } else this._$dlg.appendTo($('body'));
+        
+        var $content = $('<div/>');
+        $content.addClass(this._pfx+'-dialog-content');
+        this._$dlg.append($content);
+        if (opts.content) this.setContent(opts.content);
+        
+        if (opts.btns && opts.btns.length > 0) {
+            var $btnsWrapper = $('<div/>');
+            $btnsWrapper.addClass(this._pfx+'-dialog-btns-wrapper');
+            this._$btns = $('<div/>');
+            this._$btns.addClass(this._pfx+'-dialog-btns');
+            for (var i = 0; i < opts.btns.length; i++) {
+                this.addBtn(opts.btns[i]);
+            }
         }
-        this._$mask.fadeIn(300);
-        this._$el.appendTo(this._$mask);
-        moveToCenter(this._$el);
+        $btnsWrapper.append(this._$btns);
+        this._$dlg.append($btnsWrapper);
+        
+        moveToCenter(this._$dlg);
         return this;
     };
-    Dialog.prototype.setTitle = function(newTitle) {
-        this.title = newTitle;
-        return this.refresh.call(this);
+    Dialog.prototype.addBtn = function(opts) {
+        var $btn = $('<a/>');
+        $btn.addClass(this._pfx+'-dialog-btn');
+        if (opts.important && opts.important === true) {
+            $btn.addClass(this._pfx+'-dialog-btn-important');
+        }
+        if (opts.disabled && opts.disabled === true) {
+            $btn.addClass(this._pfx+'-dialog-btn-disabled');
+        }
+        $btn.text(opts.name)
+        this._$btns.append($btn);
+        moveToCenter(this._$dlg);
+        return this;
+    };
+    Dialog.prototype.setTitle = function(newTitle) { 
+        var $title = this._$dlg.find('.'+this._pfx+'-dialog-title');
+        console.log($title);
+        if ($title && $title.length < 1) {
+            this.title = newTitle;
+            $title = $('<div/>');
+            $title.addClass(this._pfx+'-dialog-title').text(this.title);
+            this._$dlg.prepend($title);
+        } else {
+            this.title = newTitle;
+            $title.text(this.title);
+        }
+        return this;
+    };
+    Dialog.prototype.setContent = function(newContent) {
+        this._$dlg.find('.'+this._pfx+'-dialog-content').html(newContent);
+        moveToCenter(this._$dlg);
+        return this;
     };
     Dialog.prototype.open = function() {
         if (this.isOpened) return this;
         this.isOpened = true;
-        this._$el.addClass('fade-in');
-        this._$el.show();
+        this._$dlg.addClass('fade-in');
+        this._$dlg.show();
         return this;
     };
     Dialog.prototype.close = function() {
         if (!this.isOpened) return this;
         this.isOpened = false;
-        this._$el.removeClass('fade-in');
-        this._$el.hide();
+        this._$dlg.removeClass('fade-in');
+        this._$dlg.hide();
         return this;
     };
     
