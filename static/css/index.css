@@ -28,7 +28,8 @@
 }
 .dib-dialog-title {
     padding: 0.8em 1.5em;
-    border-bottom: 0px solid #eee;
+    padding-bottom: 0;
+    /* border-bottom: 1px solid #eee; */
     background: #fff;
     font-size: 1.2em;
     border-top-left-radius: 5px;
@@ -45,8 +46,7 @@
     user-drag: none;
 }
 .dib-dialog-content {
-    padding: 0.8em 1.5em;
-    padding-bottom: 1.6em;
+    padding: 1.6em 1.5em;
     color: #777;
     transition: all 0.2s;
 }
