@@ -46,6 +46,7 @@
         return this;
     };
     Dialog.prototype.addBtn = function(opts) {
+        var self = this;
         var $btn = $('<a/>');
         $btn.addClass(this._pfx+'-dialog-btn');
         if (opts.important && opts.important === true) {
@@ -53,8 +54,13 @@
         }
         if (opts.disabled && opts.disabled === true) {
             $btn.addClass(this._pfx+'-dialog-btn-disabled');
+        } else {
+            $btn.on('click', function(e) {
+                if (opts.callback) opts.callback.call(self, opts);
+            });
         }
         $btn.text(opts.name)
+        
         this._$btns.append($btn);
         moveToCenter(this._$dlg);
         return this;

@@ -5,8 +5,12 @@ $(function() {
         title: 'Obliterate the following items',
         content: '<p>国际货币基金组织当地时间11月30日宣布：正式将人民币纳入IMF特别提款权(SDR)货币篮子。</p>',
         btns: [
-            {name: 'Cancel'},
-            {name: 'Clear browsing data', important: false}
+            {name: 'Cancel', callback: function(opts) {
+                this.close();
+            }},
+            {name: 'Clear browsing data', important: false, callback: function(opts) {
+                alert(opts.name);
+            }}
         ]
     });
     setTimeout(function() {
