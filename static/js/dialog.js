@@ -11,13 +11,16 @@
         return this;
     };
     Dialog.prototype.makeUniqueDlg = function(opts) {
+        var self = this;
         this.title = opts.title || this.title || false;
+        opts.draggable = opts.draggable || false;
         this._$dlg = $('<div/>');
         this._$dlg.attr('id', this._id).addClass(this._pfx+'-dialog');
         if (this.title) {
             var $title = $('<div/>');
             $title.addClass(this._pfx+'-dialog-title').text(this.title);
             this._$dlg.prepend($title);
+            if (opts.draggable) draggable(this._$dlg, $title);
         }
         if (opts.mask) {
             this._$mask = $('<div class="'+this._pfx+'-dialog-mask"/>');
@@ -38,11 +41,21 @@
             for (var i = 0; i < opts.btns.length; i++) {
                 this.addBtn(opts.btns[i]);
             }
+            $btnsWrapper.append(this._$btns);
+            this._$dlg.append($btnsWrapper);
         }
-        $btnsWrapper.append(this._$btns);
-        this._$dlg.append($btnsWrapper);
-        
         moveToCenter(this._$dlg);
+        $(window).resize(function() {
+            moveToCenter(self._$dlg);
+        });
+        $(document).on('mousedown', function(e) {
+            if (self.isOpened && $(e.target).closest('#'+self._id).length < 1) {
+                self._$dlg.addClass('shake');
+                $('.shake').one('animationend', function() {
+                    $(this).removeClass('shake');
+                });
+            }
+        });
         return this;
     };
     Dialog.prototype.addBtn = function(opts) {
@@ -88,14 +101,19 @@
         if (this.isOpened) return this;
         this.isOpened = true;
         this._$dlg.addClass('fade-in');
+        $('.fade-in').one('animationend', function() {
+            $(this).removeClass('fade-in');
+        });
         this._$dlg.show();
         return this;
     };
     Dialog.prototype.close = function() {
         if (!this.isOpened) return this;
+        var self = this;
         this.isOpened = false;
-        this._$dlg.removeClass('fade-in');
-        this._$dlg.hide();
+        this._$mask.fadeOut(80, function() {
+            $(this).hide();
+        });
         return this;
     };
     
@@ -105,12 +123,41 @@
                 v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         }).toUpperCase());
-    };
+    }
     
     function moveToCenter($dom) {
         var l = ($(window).width() - $dom.outerWidth()) / 2;
         var t = ($(window).height() - $dom.outerHeight()) / 2;
         $dom.css({left: l, top: t});
+    }
+    function draggable($dom, $target) {
+        var isMouseDown = false;
+        var lastX = 0;
+        var lastY = 0;
+        var deltaX = 0;
+        var deltaY = 0;
+        $target.off('mousedown').on('mousedown', function() {
+            isMouseDown = true;
+        });
+        $(document).on('mousedown', function(e) {
+            lastX = e.clientX;
+            lastY = e.clientY;
+            deltaX = e.clientX - parseInt($dom.css('left'));
+            deltaY = e.clientY - parseInt($dom.css('top'));
+            $dom.css('transition', 'none');
+        });
+        $(document).on('mouseup', function() {
+            isMouseDown = false;
+            $dom.css('transition', 'all 0.6s');
+        });
+        $(document).on('mousemove', function(e) {
+            setTimeout(function() {
+                if (!isMouseDown) return false;
+                $dom.css({left: e.clientX-deltaX, top: e.clientY-deltaY});
+                lastX = e.clientX;
+                lastY = e.clientY;
+            }, 0);
+        });
     }
     
     var root = typeof exports !== "undefined" && exports !== null ? exports : window;

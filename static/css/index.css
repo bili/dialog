@@ -4,9 +4,9 @@
     left: 0;
     right: 0;
     bottom: 0;
-    /* background: rgba(255,255,255,0.1); */
     background: rgba(0,0,0,0.2);
     z-index: 1000;
+    overflow: hidden;
 }
 .dib-dialog {
     display: none;
@@ -14,7 +14,6 @@
     top: 0;
     left: 0;
     min-width: 400px;
-    /* min-height: 200px; */
     max-width: 400px;
     font-family: "Microsoft Yahei", sans-serif;
     box-sizing: border-box;
@@ -25,6 +24,17 @@
     background: white;
     font-size: 13px;
     transition: all 0.6s; 
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
+    cursor: default;
 }
 .dib-dialog-title {
     padding: 0.8em 1.5em;
@@ -82,20 +92,20 @@
     user-drag: none;
 }
 .dib-dialog-btn:hover {
-    border: 1px solid #FF8C00;
+    border-color: #FF8C00;
 }
 .dib-dialog-btn-disabled {
-    border: 1px solid #ccc;
+    border-color: #ccc;
     color: #aaa;
     background: #ddd;
 }
 .dib-dialog-btn-disabled:hover {
-    border: 1px solid #ccc;
+    border-color: #ccc;
     color: #aaa;
     background: #ddd;
 }
 .dib-dialog-btn-important {
-    border: 1px solid #FF8C00;
+    border-color: #FF8C00;
     color: white;
     background: #ffa947;
 }
@@ -133,4 +143,46 @@
     -webkit-animation: fade-in 0.3s;
     animation-delay: 0s;
     -webkit-animation-delay: 0s;
+}
+/* shake */
+
+@-webkit-keyframes shake {
+  from, to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+@keyframes shake {
+  from, to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+.shake {
+    animation: shake 1s;
+    -webkit-animation: shake 1s;
+    animation-delay: 0.3s;
+    -webkit-animation-delay: 0.3s;
 }
