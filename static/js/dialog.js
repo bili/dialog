@@ -173,7 +173,27 @@
             }, 0);
         });
     }
+    function extend(Child, Parent) {
+    　　var F = function() {};　　　　
+        F.prototype = Parent.prototype;　　　　
+        Child.prototype = new F();　　　　
+        Child.prototype.constructor = Child;　　　　
+        Child.uber = Parent.prototype;　　
+    }
+    
+    var Alert = function(newContent) {
+        return new Dialog({
+            mask: true,
+            content: '<p>'+newContent+'</p>',
+            btns: [
+                {name: '关闭', callback: function(opts) {
+                    this.close();
+                }}
+            ]
+        });
+    };
     
     var root = typeof exports !== "undefined" && exports !== null ? exports : window;
     root.Dialog = Dialog;
+    root.Alert = Alert;
 }());

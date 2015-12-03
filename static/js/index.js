@@ -1,5 +1,6 @@
 $(function() {
     
+    Alert('xxx').open();
     var dlg = new Dialog({
         mask: true,
         title: '提现遇到问题？',
@@ -11,10 +12,6 @@ $(function() {
             {name: '已完成提现', important: true, callback: function(opts) {
                 this.setContent('You clicked Button <a href="">'+ opts.name + '</a>。');
             }}
-        ],
-        onBeforeOpen: function() {console.log('beforeOpen');},
-        onAfterOpen: function() {console.log('onAfterOpen');},
-        onBeforeClose: function() {console.log('onBeforeClose');},
-        onAfterClose: function() {console.log('onAfterClose');}
+        ]
     }).open();
 });
