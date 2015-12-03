@@ -175,5 +175,9 @@
     }
     
     var root = typeof exports !== "undefined" && exports !== null ? exports : window;
-    root.Dialog = Dialog;
+    if (root.dib) root.dib.Dialog = Dialog;
+    else { 
+        root.dib = {};
+        root.dib.Dialog = Dialog;
+    }
 }());

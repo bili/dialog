@@ -1,6 +1,6 @@
 $(function() {
     
-    var dlg = new Dialog({
+    var dlg = new dib.Dialog({
         mask: true,
         title: '提现遇到问题？',
         content: '<p>国际货币基金组织当地时间<a href="">11月30日</a>宣布：正式将人民币纳入IMF特别提款权(SDR)货币篮子。</p>',
