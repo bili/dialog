@@ -36,6 +36,20 @@
     user-drag: none;
     cursor: default;
 }
+.dib-dialog-btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: all 0.2s;
+}
+.dib-dialog-btn-close img {
+    float: left;
+    font-size: 0;
+    vertical-align: middle;
+}
+.dib-dialog-btn-close:hover {
+    background: #eee;
+}
 .dib-dialog-title {
     padding: 0.8em 1.5em;
     padding-bottom: 0;
@@ -56,9 +70,20 @@
     user-drag: none;
 }
 .dib-dialog-content {
-    padding: 1.6em 1.5em;
+    padding: 2em 1.5em;
     color: #777;
     transition: all 0.2s;
+    /* min-height: 30px; */
+}
+.dib-dialog-content a {
+    padding: 0 3px;
+    color: #FF8C00;
+    text-decoration: none;
+    border-bottom: 1px solid #FF8C00;
+}
+.dib-dialog-content a:hover {
+    background: #ffeedb;
+    border-bottom: none;
 }
 .dib-dialog-btns-wrapper {
     width: 100%;
@@ -105,9 +130,9 @@
     background: #ddd;
 }
 .dib-dialog-btn-important {
-    border-color: #FF8C00;
+    border-color: #FFA500;
     color: white;
-    background: #ffa947;
+    background: #FFA500;
 }
 .dib-dialog input {outline: none;}
 @-webkit-keyframes fade-in {

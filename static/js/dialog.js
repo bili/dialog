@@ -2,11 +2,12 @@
     var Dialog = function(opts) {
         this._pfx = 'dib';
         this._id = prefix(this._pfx);
-        return this.init(opts);
+        this._opts = opts || {};
+        return this.init();
     };
-    Dialog.prototype.init = function(opts) {
+    Dialog.prototype.init = function() {
         this.isOpened = false;
-        if (!opts || !opts.el) this.makeUniqueDlg.call(this, opts);
+        if (!this._opts || !this._opts.el) this.makeUniqueDlg.call(this, this._opts);
         else this._$dlg = opts.el;
         return this;
     };
@@ -16,6 +17,10 @@
         opts.draggable = opts.draggable || false;
         this._$dlg = $('<div/>');
         this._$dlg.attr('id', this._id).addClass(this._pfx+'-dialog');
+        var $btn_close = $('<a class="'+this._pfx+'-dialog-btn-close" href="javascript:void(0)"><img src="static/images/dialog-btn-close.png"></a>').appendTo(this._$dlg);
+        $btn_close.on('click', function() {
+            self.close();
+        });
         if (this.title) {
             var $title = $('<div/>');
             $title.addClass(this._pfx+'-dialog-title').text(this.title);
@@ -104,16 +109,25 @@
         $('.fade-in').one('animationend', function() {
             $(this).removeClass('fade-in');
         });
+        if (this._opts && this._opts.onBeforeOpen) this._opts.onBeforeOpen.call(this);
         this._$dlg.show();
+        if (this._opts && this._opts.onAfterOpen) this._opts.onAfterOpen.call(this);
         return this;
     };
     Dialog.prototype.close = function() {
         if (!this.isOpened) return this;
         var self = this;
         this.isOpened = false;
-        this._$mask.fadeOut(80, function() {
-            $(this).hide();
-        });
+        if (this._opts && this._opts.onBeforeClose) this._opts.onBeforeClose.call(this);
+        if (this._$mask) {
+            this._$mask.fadeOut(80, function() {
+                $(this).remove();
+                if (self._opts && self._opts.onAfterClose) self._opts.onAfterClose.call(self);
+            });
+        } else {
+            this._$dlg.remove();
+            if (self._opts && self._opts.onAfterClose) self._opts.onAfterClose.call(self);
+        }
         return this;
     };
     
