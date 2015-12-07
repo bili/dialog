@@ -53,7 +53,7 @@
         $(window).resize(function() {
             moveToCenter(self._$dlg);
         });
-        $(document).on('mousedown', function(e) {
+        $('body').on('mousedown', function(e) {
             if (self.isOpened && $(e.target).closest('#'+self._id).length < 1) {
                 self._$dlg.addClass('shake');
                 $('.shake').one('animationend', function() {
