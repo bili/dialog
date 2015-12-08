@@ -111,6 +111,7 @@
         });
         if (this._opts && this._opts.onBeforeOpen) this._opts.onBeforeOpen.call(this);
         this._$dlg.show();
+        this._$dlg.css('transition', 'all 0.6s');
         if (this._opts && this._opts.onAfterOpen) this._opts.onAfterOpen.call(this);
         return this;
     };
